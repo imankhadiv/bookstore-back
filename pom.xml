@@ -12,16 +12,67 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- test -->
+        <version.junit>4.12</version.junit>
+        <!--<version.arquillian>1.1.13.5</version.arquillian>-->
+        <!--<version.arquillian.wildfly>2.0.2.Final</version.arquillian.wildfly>-->
+        <!--<version.shrinkwrap>1.2.6</version.shrinkwrap>-->
+        <version.arquillian_universe>1.1.13.5</version.arquillian_universe>
+
     </properties>
-    
-    <dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.arquillian</groupId>
+                <artifactId>arquillian-universe</artifactId>
+                <version>${version.arquillian_universe}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+     <dependencies>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${version.junit}</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.arquillian.universe</groupId>
+        <artifactId>arquillian-junit</artifactId>
+        <scope>test</scope>
+        <type>pom</type>
+    </dependency>
+
+        <dependency>
+            <groupId>org.jboss.shrinkwrap</groupId>
+            <artifactId>shrinkwrap-api</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.arquillian</groupId>
+            <artifactId>wildfly-arquillian-container-remote</artifactId>
+            <version>2.1.0.Final</version>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-    </dependencies>
+         <dependency>
+             <groupId>junit</groupId>
+             <artifactId>junit</artifactId>
+             <version>4.12</version>
+         </dependency>
+         <dependency>
+             <groupId>org.jboss.arquillian.core</groupId>
+             <artifactId>arquillian-core-api</artifactId>
+             <version>1.1.4.Final</version>
+             <scope>test</scope>
+         </dependency>
+     </dependencies>
 
     <build>
         <plugins>
