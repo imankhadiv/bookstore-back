@@ -3,6 +3,7 @@ package com.elrast.bookstore.repository;
 
 import com.elrast.bookstore.model.Book;
 import com.elrast.bookstore.model.Language;
+import junit.framework.Assert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -10,6 +11,7 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.internal.runners.statements.ExpectException;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
@@ -17,6 +19,7 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class)
 public class BookRepositoryTest {
@@ -42,6 +45,21 @@ public class BookRepositoryTest {
         assertEquals(Long.valueOf(1), bookRepository.countAll());
         assertEquals(1, bookRepository.findAll().size());
     }
+
+    @Test(expected = Exception.class)
+    public void shouldNotBeAbleToCreateBookWithoutTitle() throws Exception {
+
+        Book book = new Book(null, "", 12F, "123", new Date(), 100, null, Language.DETACH);
+        Book createdBook = bookRepository.create(book);
+    }
+    @Test(expected = Exception.class)
+    public void shouldNotFindABookWithoutValidId() throws Exception {
+
+        Book book = bookRepository.find(null);
+        assertTrue(book == null);
+
+    }
+
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)

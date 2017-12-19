@@ -2,6 +2,8 @@ package com.elrast.bookstore.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -11,6 +13,7 @@ public class Book {
     @GeneratedValue
     private Long id;
 
+    @NotNull @Size(min = 0, max = 200)
     @Column(length = 200)
     private String title;
 
