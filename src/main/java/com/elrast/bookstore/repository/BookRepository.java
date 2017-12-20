@@ -2,7 +2,10 @@ package com.elrast.bookstore.repository;
 
 
 import com.elrast.bookstore.model.Book;
+import com.elrast.bookstore.util.NumberGenerator;
+import com.elrast.bookstore.util.TextUtil;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -19,15 +22,24 @@ public class BookRepository {
     @PersistenceContext(unitName = "bookStorePU")
     private EntityManager entityManager;
 
+    @Inject
+    TextUtil textUtil;
+
+    @Inject
+    NumberGenerator numberGenerator;
+
     public Book find(@NotNull Long id) {
         return entityManager.find(Book.class, id);
     }
 
     @Transactional(REQUIRED)
     public Book create(Book book) {
+        book.setTitle(textUtil.sanitize(book.getTitle()));
+        book.setIsbn(numberGenerator.generateNumber());
         entityManager.persist(book);
         return book;
     }
+
     @Transactional(REQUIRED)
     public void delete(Long id) {
         entityManager.remove(entityManager.getReference(Book.class, id));
@@ -42,5 +54,4 @@ public class BookRepository {
         TypedQuery<Long> query = entityManager.createQuery("select count(b) from Book b ", Long.class);
         return query.getSingleResult();
     }
-
 }
