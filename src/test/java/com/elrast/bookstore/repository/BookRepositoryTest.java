@@ -41,7 +41,7 @@ public class BookRepositoryTest {
 
     @Test
     public void shouldBeEmptyBeforeCreatingBook() throws Exception {
-        assertEquals(Long.valueOf(2), bookRepository.countAll());
+         assertEquals(Long.valueOf(2), bookRepository.countAll());
         assertEquals(2, bookRepository.findAll().size());
     }
 
