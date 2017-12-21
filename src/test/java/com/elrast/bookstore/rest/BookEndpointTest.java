@@ -37,8 +37,6 @@ public class BookEndpointTest {
         Response response = webTarget.path("count").request().get();
         assertEquals(Response.Status.NO_CONTENT, response.getStatus());
 
-        if(true)return;
-
         // Test find all
         response = webTarget.request(MediaType.APPLICATION_JSON).get();
         assertEquals(Response.Status.NO_CONTENT, response.getStatus());
